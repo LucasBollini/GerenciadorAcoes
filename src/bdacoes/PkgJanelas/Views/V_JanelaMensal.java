@@ -56,13 +56,19 @@ public class V_JanelaMensal extends JFrame{
         model.lblTCompras.setBounds(30, 510, 240, 35);
         painelConteudo.add(model.lblTCompras);
         
-        model.lblTVendas.setBounds(280, 510, 260, 35);
+        model.lblTVendas.setBounds(800, 500, 190, 35);
         painelConteudo.add(model.lblTVendas);
         
-        model.lblTLucro.setBounds(550, 510, 240, 35);
+        model.lblTLucro.setBounds(550, 500, 240, 35);
         painelConteudo.add(model.lblTLucro);
         
-        model.lblTDarf.setBounds(800, 510, 190, 35);
+        model.lblTPrejuizo.setBounds(550, 525, 240, 35);
+        painelConteudo.add(model.lblTPrejuizo);
+        
+        model.lblTResultado.setBounds(550, 550, 240, 35);
+        painelConteudo.add(model.lblTResultado);
+        
+        model.lblTDarf.setBounds(800, 525, 190, 35);
         painelConteudo.add(model.lblTDarf);
         
         add(painelConteudo);

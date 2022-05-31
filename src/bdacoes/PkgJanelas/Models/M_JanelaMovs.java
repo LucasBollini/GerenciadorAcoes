@@ -1,106 +1,21 @@
 package bdacoes.PkgJanelas.Models;
 
-import static bdacoes.PkgGlobais.Ferramentas.nomeMes;
-import static bdacoes.PkgGlobais.Ferramentas.FtoS;
 import bdacoes.PkgGlobais.ClasseAcao;
 import bdacoes.PkgGlobais.HandlerBd;
-import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JTextArea;
 
-public class M_JanelaAnual {
-    
-    private class acaoRelevante{
-        public String nome;
-        public int qtd;
-        public float valor, custoMedio;
-    }
-    
-    public  JTextArea   areaTxt = new JTextArea();
+public class M_JanelaMovs {
+        
+    public  JTextArea   areaTxt = new JTextArea(),
+                        excelHolder = new JTextArea();
     
     public  JButton btnSelec = new JButton("Copiar Seleção"),
                     btnVoltar = new JButton("Voltar"),
-                    btnCopiar = new JButton("Copiar Tudo");
-    
-    private ArrayList<acaoRelevante> listaAcoes = new ArrayList();
-    
-    private float resultadosMensais[][][] = new float[2][2][12];
-    
-    private void calcularCustodia(int ano){
-        
-        acaoRelevante entrada;
-        
-        for (String listaNome : HandlerBd.procurarArquivos()){
-            entrada = new acaoRelevante();
-            entrada.nome = listaNome;
-            
-            for(ClasseAcao selec : HandlerBd.lerArquivo(listaNome))
-                if(selec.getData().getYear() <= ano)
-                    switch(selec.getTipo()){
-                        case "D":   entrada.qtd = selec.getQtd();
-                                    break;
-                        case "V":   entrada.valor -= selec.getQtd() * (entrada.valor / entrada.qtd);
-                                    entrada.qtd -= selec.getQtd();
-                                    break;
-                        case "C":   entrada.qtd += selec.getQtd();
-                                    entrada.valor += (selec.getQtd() * selec.getValor()) + selec.getCorret() + selec.getEmol();
-                                    break;
-                        default:    break;
-                    }
-            
-            if(entrada.qtd > 0){
-                entrada.custoMedio = entrada.valor / entrada.qtd;
-                listaAcoes.add(entrada);
-            }
-            
-        }
-    }
-    
-    public void calcularMensais(int ano){
-        int mes, tipoOp = 0;
-        float resultTemp;
-        for (String listaNome : HandlerBd.procurarArquivos())
-            for (ClasseAcao selec : HandlerBd.lerArquivo(listaNome))
-                for(mes = 1; mes < 13; mes++)
-                    if((selec.getData().getYear() == ano) && (selec.getData().getMonthValue() == mes))
-                        if(selec.getTipo().equals("V")){
-                            tipoOp = 0;
-                            resultTemp = selec.getQtd() * (selec.getValor() - selec.getpMedio());
-                            for (ClasseAcao verif : HandlerBd.lerArquivo(listaNome))
-                                if(verif.getTipo().equals("C"))
-                                    if(verif.getData().equals(selec.getData()))
-                                        tipoOp = 1;
-                            if(resultTemp > 0)
-                                resultadosMensais[tipoOp][0][(mes - 1)] += resultTemp;
-                            else
-                                resultadosMensais[tipoOp][1][(mes - 1)] += resultTemp;
-                        }
-    }
+                    btnCopiar = new JButton("Copiar Normal"),
+                    btnExcel = new JButton("Copiar p/ Excel");
     
     public void escreverResumo(int ano){
-        calcularMensais(ano);
-        areaTxt.append("Normais\t\t\t\tDaytrade\n");
-        areaTxt.append("\tLucro\tPrejuízo\t\t\tLucro\tPrejuízo\n");
-        for(int mes = 0; mes < 12; mes++){
-            areaTxt.append(nomeMes("" + (mes + 1)) + "\t" + FtoS(resultadosMensais[0][0][mes]) + "\t" + FtoS(resultadosMensais[0][1][mes]));
-            areaTxt.append("\t\t");
-            areaTxt.append(nomeMes("" + (mes + 1)) + "\t" + FtoS(resultadosMensais[1][0][mes]) + "\t" + FtoS(resultadosMensais[1][1][mes]) + "\n");
-        }
-        
-        areaTxt.append("\n\n");
-        
-        calcularCustodia(ano);
-        for(acaoRelevante papel : listaAcoes){
-            areaTxt.append(papel.nome + ": " + papel.qtd + " unidades a um preço médio de R$" + FtoS(papel.custoMedio) + "\n");
-            areaTxt.append("Situação final: R$" + FtoS(papel.valor) + "\n\n");
-        }
-    }
-    
-    
-    
-    
-    
-    /*public void escreverResumo(int ano){
         try{
             String tempTxt, tempExcel;
             float vetorTotais[][] = new float[2][4];
@@ -158,8 +73,8 @@ public class M_JanelaAnual {
                 
             }
 
-            areaTxt.append("\n\nTotal Final de Dezembro:\n    • Valor Final: R$" + vetorTotais[1][1] + "\n\n");
-            excelHolder.append("\n\nTotal Dezembro:\tR$" + String.valueOf(vetorTotais[1][1]).replace(".", ","));
+            /*areaTxt.append("\n\nTotal Final de Dezembro:\n    • Valor Final: R$" + vetorTotais[1][1] + "\n\n");
+            excelHolder.append("\n\nTotal Dezembro:\tR$" + String.valueOf(vetorTotais[1][1]).replace(".", ","));*/
         }catch(Exception e){}
-    }*/
+    }
 }

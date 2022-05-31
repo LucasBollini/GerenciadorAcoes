@@ -28,10 +28,15 @@ public class M_JanelaMensal {
     public  JLabel  lblTCompras = new JLabel(),
                     lblTVendas= new JLabel(),
                     lblTLucro = new JLabel(),
+                    lblTPrejuizo = new JLabel(),
+                    lblTResultado = new JLabel(),
                     lblTDarf = new JLabel();
     
-    public  float   totalC = 0,
-                    totalV = 0;
+    public  float   totalL = 0,
+                    totalP = 0,
+                    totalC = 0,
+                    totalV = 0,
+                    holderTotal = 0;
     
     private void lerAcoes(String data){
         for(String nome : HandlerBd.procurarArquivos())
@@ -49,15 +54,27 @@ public class M_JanelaMensal {
         listaAcoesV.forEach(acao -> modelD.addRow(new String [] {acao.getNome(),"" + acao.getData(),"" + acao.getQtd(), FtoS(acao.getpMedio()), FtoS(acao.getValor()), FtoS(acao.getCorret()), FtoS(acao.getEmol()), FtoS(acao.getQtd() * acao.getpMedio()), FtoS((acao.getQtd() * acao.getValor()) - (acao.getCorret() + acao.getEmol())), FtoS(((acao.getQtd() * acao.getValor()) - (acao.getCorret() + acao.getEmol())) - (acao.getQtd() * acao.getpMedio()))}));
     }
     
+    private void calcTotais(ClasseAcao acao){
+        holderTotal = ((acao.getQtd() * acao.getValor()) - (acao.getCorret() + acao.getEmol())) - (acao.getQtd() * acao.getpMedio());
+        if(holderTotal >= 0)
+            totalL += holderTotal;
+        else
+            totalP += holderTotal;
+        totalV += acao.getQtd() * acao.getValor();
+    }
+    
     private void preencherLblSimples(){
-        totalC = totalV = 0;
+        totalC = totalV = totalL = totalP = holderTotal = 0;
         
-        listaAcoesV.forEach(acao -> totalC += (acao.getQtd() * acao.getpMedio()));
-        listaAcoesV.forEach(acao -> totalV += (acao.getQtd() * acao.getValor()) - (acao.getCorret() + acao.getEmol()));
+        listaAcoesV.forEach(acao -> calcTotais(acao));
+        
+        listaAcoesC.forEach(acao -> totalC += ((acao.getQtd() * acao.getValor()) + (acao.getCorret() + acao.getEmol())));
         
         lblTCompras.setText("Total Compras = R$" + FtoS(totalC));
         lblTVendas.setText("Total Vendas = R$" + FtoS(totalV));
-        lblTLucro.setText("Total Lucro = R$" + FtoS(totalV - totalC));
+        lblTLucro.setText(      "Total Lucro     = R$" + FtoS(totalL));
+        lblTPrejuizo.setText(   "Total Prejuízo = R$" + FtoS(totalP));
+        lblTResultado.setText(  "Total Líquido  = R$" + FtoS(totalL + totalP));
         
     }
     

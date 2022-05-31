@@ -27,6 +27,7 @@ public class M_JanelaPrincipal {
                     btnRmv = new JButton("Remover"),
                     btnMensal = new JButton("Tabela Mensal"),
                     btnAnual = new JButton("Resumo Anual"),
+                    btnMovs = new JButton("Movimentação Anual"),
                     btnDesdobr = new JButton("Desdobramento");
     
     public  JComboBox   comboTeste = new JComboBox(new String[]{"ttt","trrrr","bugao"}),
@@ -46,11 +47,11 @@ public class M_JanelaPrincipal {
                 switch(acao.getTipo()){
                     case "D":   modelD.addRow(new String[]{ "" + acao.getData(), acao.getTipo(), "" + acao.getQtd(), "", "", "", "", "", "", "", "", "" + contador++});
                                 break;
-                    case "C":   modelD.addRow(new String[]{ "" + acao.getData(), acao.getTipo(), "" + acao.getQtd(), "", FtoS(acao.getValor()), "" + acao.getCorret(), "" + acao.getEmol(), FtoS(((acao.getQtd() * acao.getValor()) + acao.getCorret() + acao.getEmol())), "", "", "", "" + contador++});
+                    case "C":   modelD.addRow(new String[]{ "" + acao.getData(), acao.getTipo(), "" + acao.getQtd(), "", FtoS(acao.getValor()), "" + FtoS(acao.getCorret()), "" + FtoS(acao.getEmol()), FtoS(((acao.getQtd() * acao.getValor()) + acao.getCorret() + acao.getEmol())), "", "", "", "" + contador++});
                                 break;
                     case "V":   holder[0] = acao.getQtd() * acao.getpMedio();
                                 holder[1] = (acao.getQtd() * acao.getValor()) - acao.getCorret() - acao.getEmol();
-                                modelD.addRow(new String[]{ "" + acao.getData(), acao.getTipo(), "" + (-acao.getQtd()), FtoS(acao.getpMedio()), FtoS(acao.getValor()), "" + acao.getCorret(), "" + acao.getEmol(), FtoS(holder[0]), FtoS(holder[1]), FtoS((holder[1] - holder[0])), FtoS(((holder[1] / holder[0] - 1) * 100)), "" + contador++});
+                                modelD.addRow(new String[]{ "" + acao.getData(), acao.getTipo(), "" + (-acao.getQtd()), FtoS(acao.getpMedio()), FtoS(acao.getValor()), "" + FtoS(acao.getCorret()), "" + FtoS(acao.getEmol()), FtoS(holder[0]), FtoS(holder[1]), FtoS((holder[1] - holder[0])), FtoS(((holder[1] / holder[0] - 1) * 100)), "" + contador++});
                                 break;
                     default:    break;
                 }

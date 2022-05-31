@@ -48,6 +48,8 @@ public class C_JanelaPrincipal{
         
         model.btnAnual.addMouseListener(new abridorDeJanelas("anual", model.btnAnual));
         
+        model.btnMovs.addMouseListener(new abridorDeJanelas("movs", model.btnMovs));
+        
     }
     
     class abridorDeJanelas extends MouseAdapter{
@@ -67,6 +69,7 @@ public class C_JanelaPrincipal{
                 case "desdobramento": new C_JanelaDesdobr(esteController); break;
                 case "mensal": new C_JanelaMensal(esteController, model.comboMes.getSelectedItem().toString(), model.comboAno.getSelectedItem().toString()); break;
                 case "anual": new C_JanelaAnual(esteController, model.comboAno.getSelectedItem().toString()); break;
+                case "movs": new C_JanelaMovs(esteController, model.comboAno.getSelectedItem().toString()); break;
                 default: break;
             }
             view.setVisible(false);

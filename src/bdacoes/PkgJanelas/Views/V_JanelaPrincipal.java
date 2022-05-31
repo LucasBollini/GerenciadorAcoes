@@ -68,6 +68,9 @@ public class V_JanelaPrincipal extends JFrame{
 
         model.btnAnual.setBounds(480, 480, 160, 40);
         painelConteudo.add(model.btnAnual);
+        
+        model.btnMovs.setBounds(660, 480, 160, 40);
+        painelConteudo.add(model.btnMovs);
             
         setTitle("Gerenciador Ações");
         setContentPane(painelConteudo);

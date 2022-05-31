@@ -1,14 +1,14 @@
 package bdacoes.PkgJanelas.Views;
 
-import bdacoes.PkgJanelas.Models.M_JanelaAnual;
+import bdacoes.PkgJanelas.Models.M_JanelaMovs;
 import java.awt.Dimension;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-public class V_JanelaAnual extends JFrame{   
+public class V_JanelaMovs extends JFrame{   
     
-    public V_JanelaAnual(String ano, M_JanelaAnual model){
+    public V_JanelaMovs(String ano, M_JanelaMovs model){
         
         JPanel painelConteudo = new JPanel();
         painelConteudo.setPreferredSize(new Dimension(1000,600));
@@ -27,11 +27,14 @@ public class V_JanelaAnual extends JFrame{
         model.btnCopiar.setBounds(250, 550, 160, 30);
         painelConteudo.add(model.btnCopiar);
         
+        model.btnExcel.setBounds(430, 550, 170, 30);
+        painelConteudo.add(model.btnExcel);
+        
         add(painelConteudo);
-        setTitle("Resumo anual: " + ano);
+        setTitle("Resumo movimentações: " + ano);
         setSize(1000,600);
         setResizable(false);
         pack();
-        setVisible(true);
+        setVisible(true);        
     }
 }
